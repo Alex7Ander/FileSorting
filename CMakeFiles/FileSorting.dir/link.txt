@@ -1,0 +1,1 @@
+/usr/bin/clang++    -rdynamic CMakeFiles/FileSorting.dir/main.cpp.o  -o FileSorting 
