@@ -9,4 +9,10 @@
 /home/alex/Projects/FileSorting/main.cpp
 iostream
 -
+fstream
+-
+string
+-
+vector
+-
 
