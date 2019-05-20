@@ -6,17 +6,11 @@
 
 #IncludeRegexTransform: 
 
-/home/alex/Projects/FileSorting/FileSorting.cpp
+/home/alex/Projects/FileSorting/CreateFile.cpp
 iostream
 -
 fstream
 -
 string
--
-sstream
--
-vector
--
-stdio.h
 -
 

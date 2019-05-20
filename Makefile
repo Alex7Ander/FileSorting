@@ -123,32 +123,72 @@ FileSorting/fast:
 	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/build
 .PHONY : FileSorting/fast
 
-main.o: main.cpp.o
+#=============================================================================
+# Target rules for targets named CreateFile
 
-.PHONY : main.o
+# Build rule for target.
+CreateFile: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 CreateFile
+.PHONY : CreateFile
+
+# fast build rule for target.
+CreateFile/fast:
+	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/build
+.PHONY : CreateFile/fast
+
+CreateFile.o: CreateFile.cpp.o
+
+.PHONY : CreateFile.o
 
 # target to build an object file
-main.cpp.o:
-	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/main.cpp.o
-.PHONY : main.cpp.o
+CreateFile.cpp.o:
+	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/CreateFile.cpp.o
+.PHONY : CreateFile.cpp.o
 
-main.i: main.cpp.i
+CreateFile.i: CreateFile.cpp.i
 
-.PHONY : main.i
+.PHONY : CreateFile.i
 
 # target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/main.cpp.i
-.PHONY : main.cpp.i
+CreateFile.cpp.i:
+	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/CreateFile.cpp.i
+.PHONY : CreateFile.cpp.i
 
-main.s: main.cpp.s
+CreateFile.s: CreateFile.cpp.s
 
-.PHONY : main.s
+.PHONY : CreateFile.s
 
 # target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/main.cpp.s
-.PHONY : main.cpp.s
+CreateFile.cpp.s:
+	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/CreateFile.cpp.s
+.PHONY : CreateFile.cpp.s
+
+FileSorting.o: FileSorting.cpp.o
+
+.PHONY : FileSorting.o
+
+# target to build an object file
+FileSorting.cpp.o:
+	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/FileSorting.cpp.o
+.PHONY : FileSorting.cpp.o
+
+FileSorting.i: FileSorting.cpp.i
+
+.PHONY : FileSorting.i
+
+# target to preprocess a source file
+FileSorting.cpp.i:
+	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/FileSorting.cpp.i
+.PHONY : FileSorting.cpp.i
+
+FileSorting.s: FileSorting.cpp.s
+
+.PHONY : FileSorting.s
+
+# target to generate assembly for a file
+FileSorting.cpp.s:
+	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/FileSorting.cpp.s
+.PHONY : FileSorting.cpp.s
 
 # Help Target
 help:
@@ -157,11 +197,15 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... FileSorting"
 	@echo "... edit_cache"
-	@echo "... main.o"
-	@echo "... main.i"
-	@echo "... main.s"
+	@echo "... FileSorting"
+	@echo "... CreateFile"
+	@echo "... CreateFile.o"
+	@echo "... CreateFile.i"
+	@echo "... CreateFile.s"
+	@echo "... FileSorting.o"
+	@echo "... FileSorting.i"
+	@echo "... FileSorting.s"
 .PHONY : help
 
 

@@ -57,38 +57,38 @@ include CMakeFiles/FileSorting.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/FileSorting.dir/flags.make
 
-CMakeFiles/FileSorting.dir/main.cpp.o: CMakeFiles/FileSorting.dir/flags.make
-CMakeFiles/FileSorting.dir/main.cpp.o: main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/Projects/FileSorting/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/FileSorting.dir/main.cpp.o"
-	/usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FileSorting.dir/main.cpp.o -c /home/alex/Projects/FileSorting/main.cpp
+CMakeFiles/FileSorting.dir/FileSorting.cpp.o: CMakeFiles/FileSorting.dir/flags.make
+CMakeFiles/FileSorting.dir/FileSorting.cpp.o: FileSorting.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/alex/Projects/FileSorting/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/FileSorting.dir/FileSorting.cpp.o"
+	/usr/bin/clang++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/FileSorting.dir/FileSorting.cpp.o -c /home/alex/Projects/FileSorting/FileSorting.cpp
 
-CMakeFiles/FileSorting.dir/main.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FileSorting.dir/main.cpp.i"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/Projects/FileSorting/main.cpp > CMakeFiles/FileSorting.dir/main.cpp.i
+CMakeFiles/FileSorting.dir/FileSorting.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/FileSorting.dir/FileSorting.cpp.i"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/alex/Projects/FileSorting/FileSorting.cpp > CMakeFiles/FileSorting.dir/FileSorting.cpp.i
 
-CMakeFiles/FileSorting.dir/main.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FileSorting.dir/main.cpp.s"
-	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/Projects/FileSorting/main.cpp -o CMakeFiles/FileSorting.dir/main.cpp.s
+CMakeFiles/FileSorting.dir/FileSorting.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/FileSorting.dir/FileSorting.cpp.s"
+	/usr/bin/clang++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/alex/Projects/FileSorting/FileSorting.cpp -o CMakeFiles/FileSorting.dir/FileSorting.cpp.s
 
-CMakeFiles/FileSorting.dir/main.cpp.o.requires:
+CMakeFiles/FileSorting.dir/FileSorting.cpp.o.requires:
 
-.PHONY : CMakeFiles/FileSorting.dir/main.cpp.o.requires
+.PHONY : CMakeFiles/FileSorting.dir/FileSorting.cpp.o.requires
 
-CMakeFiles/FileSorting.dir/main.cpp.o.provides: CMakeFiles/FileSorting.dir/main.cpp.o.requires
-	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/main.cpp.o.provides.build
-.PHONY : CMakeFiles/FileSorting.dir/main.cpp.o.provides
+CMakeFiles/FileSorting.dir/FileSorting.cpp.o.provides: CMakeFiles/FileSorting.dir/FileSorting.cpp.o.requires
+	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/FileSorting.cpp.o.provides.build
+.PHONY : CMakeFiles/FileSorting.dir/FileSorting.cpp.o.provides
 
-CMakeFiles/FileSorting.dir/main.cpp.o.provides.build: CMakeFiles/FileSorting.dir/main.cpp.o
+CMakeFiles/FileSorting.dir/FileSorting.cpp.o.provides.build: CMakeFiles/FileSorting.dir/FileSorting.cpp.o
 
 
 # Object files for target FileSorting
 FileSorting_OBJECTS = \
-"CMakeFiles/FileSorting.dir/main.cpp.o"
+"CMakeFiles/FileSorting.dir/FileSorting.cpp.o"
 
 # External object files for target FileSorting
 FileSorting_EXTERNAL_OBJECTS =
 
-FileSorting: CMakeFiles/FileSorting.dir/main.cpp.o
+FileSorting: CMakeFiles/FileSorting.dir/FileSorting.cpp.o
 FileSorting: CMakeFiles/FileSorting.dir/build.make
 FileSorting: CMakeFiles/FileSorting.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/alex/Projects/FileSorting/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Linking CXX executable FileSorting"
@@ -99,7 +99,7 @@ CMakeFiles/FileSorting.dir/build: FileSorting
 
 .PHONY : CMakeFiles/FileSorting.dir/build
 
-CMakeFiles/FileSorting.dir/requires: CMakeFiles/FileSorting.dir/main.cpp.o.requires
+CMakeFiles/FileSorting.dir/requires: CMakeFiles/FileSorting.dir/FileSorting.cpp.o.requires
 
 .PHONY : CMakeFiles/FileSorting.dir/requires
 

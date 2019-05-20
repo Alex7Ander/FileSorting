@@ -4,7 +4,7 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/alex/Projects/FileSorting/FileSorting.cpp" "/home/alex/Projects/FileSorting/CMakeFiles/FileSorting.dir/FileSorting.cpp.o"
+  "/home/alex/Projects/FileSorting/CreateFile.cpp" "/home/alex/Projects/FileSorting/CMakeFiles/CreateFile.dir/CreateFile.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

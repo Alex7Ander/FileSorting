@@ -1,4 +1,5 @@
 cmake_minimum_required(VERSION 2.6)
 project (largeFileSorting LANGUAGES CXX)
 SET(CMAKE_CXX_COMPILER /usr/bin/clang++)
-add_executable(FileSorting main.cpp)
+add_executable(FileSorting FileSorting.cpp)
+add_executable(CreateFile CreateFile.cpp)
