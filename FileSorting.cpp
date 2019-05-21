@@ -3,20 +3,44 @@
 #include <string>
 #include <sstream>
 #include <vector>
+#include <thread>
+#include <mutex>
 #include <stdio.h>
 
 using namespace std;
 
 void MergeSorting(vector<int>& array, int left, int right);
 int  FileSize(string fileName);
-int  ReadFilePart(string fileName, int fromIndex, int countOfNumbers, bool &readTillEnd, vector<int> &values);
+int  ReadFilePart(FileReadingInfo *info);
 void WriteFile(string fileName, vector<int>& data, int size);
 void MergeTwoFiles(string fileName1, string fileName2, string outName);
 void MergeFiles(vector<string> &fileNames);
 
+/*
+class FileSorter
+{
+private:
+	int countOfParts;
+
+public:
+	ReadFile();
+	SortFile();
+	MergeFiles();
+	WriteFiles();	
+};
+*/
+struct FileReadingInfo{
+	string filePath;
+	int countOfValues;
+	int partCount;
+	vector<int> values;
+	mutex *readingMutex;
+	FileReadingInfo(int count, mutex *mtx) : countOfValues(count), readingMutex(mtx){}
+};
+
 int main()
 {
-std::cout << "Input file path, which should be sorted: " << endl;
+	std::cout << "Input file path, which should be sorted: " << endl;
 	string filePath;
 	cin >> filePath;
 	if (filePath == "0") filePath = "/home/alex/FileForSorting/f";
@@ -32,20 +56,21 @@ std::cout << "Input file path, which should be sorted: " << endl;
 	int fileIndex = 0;
 	vector<string> fileNames;
 	while (!ReadTillEnd){
-		std::cout << "Itteration # " << fileIndex << endl;
+
 		int countOfNumbers = availableSize / sizeof(int);
 		vector<int> valuesNumbers;
 
-		fromIndex += ReadFilePart(filePath, fromIndex, countOfNumbers, ReadTillEnd, valuesNumbers);
-		cout << "File was read" << endl;
-		std::cout << "Part number " << fileIndex << " was read \t";
+		mutex mtx;
+		FileReadingInfo *info = new FileReadingInfo(countOfNumbers, &mtx);
+		thread threadReading(ReadFilePart, info);
 		
+		thread threadSorting(MergeSorting, info);
 		MergeSorting(valuesNumbers, 0, valuesNumbers.size() - 1);
 		std::cout << "Sorted \t";
 
 		stringstream numStr;
 		numStr << fileIndex;
-		string fileOutPath = "/home/alex/FileForSorting/sorted/outFile" + numStr.str();
+		string fileOutPath = "/home/alex/FileForSorting/sorted/outFile" + numStr.str();  
 		WriteFile(fileOutPath.c_str(), valuesNumbers, valuesNumbers.size());
 		fileNames.push_back(fileOutPath);
 		std::cout << "Writen" << std::endl;
@@ -68,20 +93,21 @@ int FileSize(string fileName)
 	return size;
 }
 
-int ReadFilePart(string fileName, int fromIndex, int countOfNumbers, bool &readTillEnd, vector<int> &values)
+int ReadFilePart(FileReadingInfo *info)
 {
+	info->readingMutex->lock();
 	ifstream fIn;
 	int countOfRead = 0;
 	fIn.open(fileName.c_str());
 	if (fIn.is_open()) {
-		values.clear();
+		info->values.clear();
 		char buffer[20];
 		for (int i = 0; i < fromIndex + countOfNumbers; i++) {
 			if (!fIn.eof()){
 				fIn >> buffer;
 				if (i >= fromIndex){
 					int value = atoi(buffer);
-					values.push_back(value);
+					info->values.push_back(value);
 					countOfRead++;
 				}
 			}
