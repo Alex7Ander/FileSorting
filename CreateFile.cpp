@@ -3,41 +3,54 @@
 #include <string>
 
 using namespace std;
-void CreateFile(string fileName, int size);
+int CreateFile(string fileName, int size);
 
-int main()
+int main(int argc, char* argv[])
 {
 	string filePath;
-	cout << "File path: " << endl;
-	cin >> filePath;
-	if (filePath=="0") filePath = "/home/alex/";
 	int size;
-	bool notDone = true;
-	while(notDone){
-	cout << "Usefull data size: " << endl;
-		if (cin >> size){
-			notDone = false;
-			size *= 1024;
-			size *= 1024;
-			CreateFile(filePath, size);
+	if (argc == 3){
+		filePath = argv[1];
+		size = atoi(argv[2]);
+		if (size<=0){
+			cout << "Wrong size parametr" << endl;
+			return -3;
+		}
+		size *= 1024;
+		size *= 1024;
+		int resOfCreating = CreateFile(filePath, size);
+		if (!resOfCreating){
+			cout << "DONE" << endl;
+			return 0;
 		}
 		else{
-			cout << "It is not an integer value. Try one more time: " << endl;	
-		}
-	}	
-	return 0;
+			cout << "Error on file writing" << endl;	
+			return -2;
+		}	
+	}
+	else{
+		cout << "Wrong count of parametrs" << endl;
+		cout << "CreateFile filepath usefullDataSize" << endl;
+		return -1;
+	}
+
 }
 
-void CreateFile(string fileName, int size)
+int CreateFile(string fileName, int size)
 {
 	ofstream fOut;
 	fOut.open(fileName.c_str());
-	int countOfDigits = size/sizeof(int);
-	for (int i = 0; i < countOfDigits; i++){
-	  fOut << rand();//%899+100;
-	  if ((i+1)%10 == 0) fOut << "\n";
-	  else fOut << "\t";
-    }
-	fOut.close();
-	return;
+	if (fOut.is_open()){
+		int countOfDigits = size/sizeof(int);
+		for (int i = 0; i < countOfDigits; i++){
+	  		fOut << rand();//%899+100;
+	  		if ((i+1)%10 == 0) fOut << "\n";
+	  		else fOut << "\t";
+    	}
+		fOut.close();
+		return 0;
+	}
+	else{
+		return -1;
+	}
 }

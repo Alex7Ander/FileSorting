@@ -11,75 +11,48 @@ using namespace std;
 
 void MergeSorting(vector<int>& array, int left, int right);
 int  FileSize(string fileName);
-int  ReadFilePart(FileReadingInfo *info);
+int  SplitingIntoSortedParts(string initialFileName, vector<string> &outFilesNames, int countOfNumbers, vector<int> &values);
 void WriteFile(string fileName, vector<int>& data, int size);
 void MergeTwoFiles(string fileName1, string fileName2, string outName);
-void MergeFiles(vector<string> &fileNames);
+void MergeFiles(vector<string> &fileNames, string SavingFilePath);
 
-/*
-class FileSorter
+int main(int argc, char* argv[])
 {
-private:
-	int countOfParts;
-
-public:
-	ReadFile();
-	SortFile();
-	MergeFiles();
-	WriteFiles();	
-};
-*/
-struct FileReadingInfo{
-	string filePath;
-	int countOfValues;
-	int partCount;
-	vector<int> values;
-	mutex *readingMutex;
-	FileReadingInfo(int count, mutex *mtx) : countOfValues(count), readingMutex(mtx){}
-};
-
-int main()
-{
-	std::cout << "Input file path, which should be sorted: " << endl;
-	string filePath;
-	cin >> filePath;
-	if (filePath == "0") filePath = "/home/alex/FileForSorting/f";
+	string initialFilePath;
+	string savingFilePath;
 	int ramLimit;
-	std::cout << "Inpit RAM limit, Mb: " << endl;
-	cin >> ramLimit;
-	ramLimit *= 1024;
-	ramLimit *= 1024;
-	int availableSize = ramLimit / 2;
 
-	int fromIndex = 0;
-	bool ReadTillEnd = false;
-	int fileIndex = 0;
-	vector<string> fileNames;
-	while (!ReadTillEnd){
+	if (argc==4){
+		initialFilePath = argv[1];
+		savingFilePath = argv[2];
+		ramLimit = atoi(argv[3]);
+		//std::cout << "Input file path, which should be sorted: " << endl;	
+		cout << "Initial file is " << initialFilePath << endl;
+		cout << "Sorted file will ba saved in: " << savingFilePath << endl;
+		cout << "RAM limit is: " << ramLimit << endl;
+		ramLimit *= 1024;
+		ramLimit *= 1024;
+		int availableSize = ramLimit / 2;
 
-		int countOfNumbers = availableSize / sizeof(int);
-		vector<int> valuesNumbers;
+		int fromIndex = 0;
+		int fileIndex = 0;
 
-		mutex mtx;
-		FileReadingInfo *info = new FileReadingInfo(countOfNumbers, &mtx);
-		thread threadReading(ReadFilePart, info);
+		int CountOfNumbers = availableSize / sizeof(int);
+		vector<int> ValuesNumbers;
+		vector<string> OutFilesNames;
+	
+		int resOfSpliting = SplitingIntoSortedParts(initialFilePath, OutFilesNames, CountOfNumbers, ValuesNumbers);
+		if (!resOfSpliting) 
+			std::cout << "Error opening file! Maybe it doesn't exist anymore?" << std::endl;
 		
-		thread threadSorting(MergeSorting, info);
-		MergeSorting(valuesNumbers, 0, valuesNumbers.size() - 1);
-		std::cout << "Sorted \t";
-
-		stringstream numStr;
-		numStr << fileIndex;
-		string fileOutPath = "/home/alex/FileForSorting/sorted/outFile" + numStr.str();  
-		WriteFile(fileOutPath.c_str(), valuesNumbers, valuesNumbers.size());
-		fileNames.push_back(fileOutPath);
-		std::cout << "Writen" << std::endl;
-		fileIndex++;
-		std::cout << countOfNumbers << endl << "----------------------" << endl;
+		MergeFiles(OutFilesNames, savingFilePath);
+		std::cout << "Done" << endl;
+		return 0;
 	}
-	MergeFiles(fileNames);
-	std::cout << "Done" << endl;
-	return 0;
+	else{
+		cout << "Wrong parametrs" << endl;
+		return -1;
+	}
 }
 
 int FileSize(string fileName)
@@ -93,30 +66,40 @@ int FileSize(string fileName)
 	return size;
 }
 
-int ReadFilePart(FileReadingInfo *info)
+int SplitingIntoSortedParts(string fileName, vector<string> &outFilesNames, int countOfNumbers, vector<int> &values)
 {
-	info->readingMutex->lock();
 	ifstream fIn;
 	int countOfRead = 0;
 	fIn.open(fileName.c_str());
 	if (fIn.is_open()) {
-		info->values.clear();
-		char buffer[20];
-		for (int i = 0; i < fromIndex + countOfNumbers; i++) {
-			if (!fIn.eof()){
-				fIn >> buffer;
-				if (i >= fromIndex){
+		values.clear();
+		char buffer[20];		
+		int countOfParts = 0;
+		std::cout << "Start splitting" << std::endl;
+		while (!fIn.eof()){			
+			values.clear();
+			for (int i = 0; i < countOfNumbers; i++){
+				if (!fIn.eof()){
+					fIn >> buffer;
 					int value = atoi(buffer);
-					info->values.push_back(value);
-					countOfRead++;
+					values.push_back(value);
 				}
+				else{
+					break;
+				}								
 			}
-			else{
-				readTillEnd = true;
-				break;
-			}
+			countOfParts++;
+			std::cout << "Part number " << countOfParts + 1 << " was read\t";
+			MergeSorting(values, 0, values.size()-1);
+			std::cout << "sorted\t";
+			stringstream numStr;
+			numStr << countOfParts;
+			string fileOutPath = "C:\\Users\\Alex\\Desktop\\testPartFileReading\\largeFileSorting  20.05\\largeFileSorting\\largeFileSorting\\Sorting\\outFile" + numStr.str();
+			WriteFile(fileOutPath.c_str(), values, values.size());
+			outFilesNames.push_back(fileOutPath);
+			std::cout << "writen." << std::endl << "------------------------" << std::endl;
 		}
-		return countOfRead;
+		return countOfParts;
 	}
 	else {
 		return -1;
@@ -214,7 +197,7 @@ void MergeTwoFiles(string fileName1, string fileName2, string outName)
 				}
 			}
 
-			if (!file2.eof()){
+			if (file1.eof()){
 				while (!file2.eof()){
 					file2 >> buff2;
 					value2 = atoi(buff2);
@@ -224,7 +207,7 @@ void MergeTwoFiles(string fileName1, string fileName2, string outName)
 					counter++;
 				}
 			}
-			if (!file1.eof()) {
+			if (file2.eof()) {
 				while (!file1.eof()){
 					file1 >> buff1;
 					value1 = atoi(buff1);
@@ -241,7 +224,7 @@ void MergeTwoFiles(string fileName1, string fileName2, string outName)
 	}// end if (file1.is_open() && file2.is_open())
 }
 
-void MergeFiles(vector<string> &fileNames)
+void MergeFiles(vector<string> &fileNames, string SavingFilePath)
 {
 	int stopIndex = 0;
 	while (stopIndex != fileNames.size() - 1){
@@ -256,5 +239,5 @@ void MergeFiles(vector<string> &fileNames)
 		stopIndex += 2;
 	}
 	string oldName = fileNames[fileNames.size() - 1];
-	rename(oldName.c_str(), "/home/alex/FileForSorting/sorted/SortedFile");
+	rename(oldName.c_str(), SavingFilePath.c_str());
 }
