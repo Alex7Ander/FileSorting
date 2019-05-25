@@ -3,8 +3,6 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include <thread>
-#include <mutex>
 #include <stdio.h>
 
 using namespace std;
@@ -18,15 +16,16 @@ void MergeFiles(vector<string> &fileNames, string SavingFilePath);
 
 int main(int argc, char* argv[])
 {
+	cout << "Version of 25.05 (1)" << endl;
 	string initialFilePath;
 	string savingFilePath;
 	int ramLimit;
-
+    
 	if (argc==4){
+		cout << "START" << endl; 
 		initialFilePath = argv[1];
 		savingFilePath = argv[2];
 		ramLimit = atoi(argv[3]);
-		//std::cout << "Input file path, which should be sorted: " << endl;	
 		cout << "Initial file is " << initialFilePath << endl;
 		cout << "Sorted file will ba saved in: " << savingFilePath << endl;
 		cout << "RAM limit is: " << ramLimit << endl;
@@ -47,6 +46,7 @@ int main(int argc, char* argv[])
 		
 		MergeFiles(OutFilesNames, savingFilePath);
 		std::cout << "Done" << endl;
+		
 		return 0;
 	}
 	else{
@@ -94,7 +94,7 @@ int SplitingIntoSortedParts(string fileName, vector<string> &outFilesNames, int 
 			std::cout << "sorted\t";
 			stringstream numStr;
 			numStr << countOfParts;
-			string fileOutPath = "C:\\Users\\Alex\\Desktop\\testPartFileReading\\largeFileSorting  20.05\\largeFileSorting\\largeFileSorting\\Sorting\\outFile" + numStr.str();
+			string fileOutPath = "sFile" + numStr.str();
 			WriteFile(fileOutPath.c_str(), values, values.size());
 			outFilesNames.push_back(fileOutPath);
 			std::cout << "writen." << std::endl << "------------------------" << std::endl;
@@ -110,12 +110,13 @@ void WriteFile(string fileName, vector<int>& data, int size)
 {
 	ofstream fOut;
 	fOut.open(fileName.c_str());
-	for (int i = 0; i < size; i++) {
+	for (int i = 0; i < size-1; i++) {
 		fOut << data[i];
 		if ((i + 1) % 10 == 0) fOut << "\n";
 		else fOut << "\t";
 	}
-	fOut << endl;
+	fOut << data[size-1];
+	//fOut << endl;
 	fOut.close();
 	return;
 }
@@ -151,71 +152,84 @@ void MergeTwoFiles(string fileName1, string fileName2, string outName)
 {
 	ifstream file1;
 	ifstream file2;
-	file1.open(fileName1);
-	file2.open(fileName2);
+	file1.open(fileName1.c_str());
+	file2.open(fileName2.c_str());
 	if (file1.is_open() && file2.is_open()){
 		ofstream fileOut;
-		fileOut.open(outName);
+		fileOut.open(outName.c_str());
 		if (fileOut.is_open()){
-			bool stepFile1 = true;
-			bool stepFile2 = true;
-			char buff1[20];
-			char buff2[20];
+			bool stepFile1 = true; //флаг, указывающий на то, что надо прочитать следующее значение из 1-го файла
+			bool stepFile2 = true; //аналогично но для 2-го файла
 			int value1;
 			int value2;
 			int counter = 0;
 			bool stop = false;
-			while (!stop){
-				if (stepFile1){
-					file1 >> buff1;
-					value1 = atoi(buff1);
+			while (true){
+				char buff[20];
+				//если необходимо прочитать значение из 1-го файла
+				if (stepFile1){					
+					if (file1.eof()){ 	//если дошли до конца файла, то прерываем цикл сравнений
+						fileOut << value2;	
+						counter++;
+						if (!file2.eof()){
+							if ((counter + 1) % 10 == 0) fileOut << "\n";
+							else fileOut << "\t";	
+							while(true){
+								file2 >> buff;
+								value2 = atoi(buff);
+								fileOut << value2;
+								//if ((counter + 1) % 10 == 0) fileOut << "\n";
+								//else fileOut << "\t";
+								counter++;	
+								if (file2.eof()) break;	
+								if ((counter + 1) % 10 == 0) fileOut << "\n";
+								else fileOut << "\t";						
+							}
+						}
+						break;
+					}
+					file1 >> buff;
+					value1 = atoi(buff);
 				}
-
-				if (stepFile2){
-					file2 >> buff2;
-					value2 = atoi(buff2);
+				//а если необходимо прочитать значение из 2-го файла
+				if (stepFile2){					
+					if (file2.eof()){	
+						fileOut << value1;
+						counter++;
+						if (!file1.eof()){
+							if ((counter + 1) % 10 == 0) fileOut << "\n";
+							else fileOut << "\t";	
+							while(true){
+								file1 >> buff;
+								value1 = atoi(buff);
+								fileOut << value1;
+								//if ((counter + 1) % 10 == 0) fileOut << "\n";
+								//else fileOut << "\t";
+								counter++;		
+								if (file1.eof()) break;
+								if ((counter + 1) % 10 == 0) fileOut << "\n";
+								else fileOut << "\t";
+							}
+						}
+						break;
+					}
+					file2 >> buff;
+					value2 = atoi(buff);
 				}
-
+				//сравниваем и меньшее или равное записываем в новый файл
 				if (value1 < value2){
-					stepFile1 = true;
-					stepFile2 = false;
-					fileOut << value1;
-					if ((counter + 1) % 10 == 0) fileOut << "\n";
-					else fileOut << "\t";
+					stepFile1 = true; //если в 1-м фале было наименьшее значение, то из 1-го файла надо будет прочитать следующее
+					stepFile2 = false; //а из 2-го не надо
+					fileOut << value1; //записывам его
 				}
 				else{
-					stepFile2 = true;
 					stepFile1 = false;
+					stepFile2 = true;					
 					fileOut << value2;
-					if ((counter + 1) % 10 == 0) fileOut << "\n";
-					else fileOut << "\t";
 				}
+				if ((counter + 1) % 10 == 0) fileOut << "\n";
+				else fileOut << "\t";
 				counter++;
-
-				if ((file1.eof() && stepFile1) || (file2.eof() && stepFile2)) {
-					stop = true;
-				}
-			}
-
-			if (file1.eof()){
-				while (!file2.eof()){
-					file2 >> buff2;
-					value2 = atoi(buff2);
-					fileOut << value2;
-					if ((counter + 1) % 10 == 0) fileOut << "\n";
-					else fileOut << "\t";
-					counter++;
-				}
-			}
-			if (file2.eof()) {
-				while (!file1.eof()){
-					file1 >> buff1;
-					value1 = atoi(buff1);
-					fileOut << value1;
-					if ((counter + 1) % 10 == 0) fileOut << "\n";
-					else fileOut << "\t";
-					counter++;
-				}
 			}
 			file1.close();
 			file2.close();
@@ -227,16 +241,18 @@ void MergeTwoFiles(string fileName1, string fileName2, string outName)
 void MergeFiles(vector<string> &fileNames, string SavingFilePath)
 {
 	int stopIndex = 0;
+	int mergeCounter = 1;
 	while (stopIndex != fileNames.size() - 1){
 		stringstream numStr;
-		numStr << stopIndex;
-		string outName = fileNames[stopIndex] + "_" + numStr.str();
+		numStr << mergeCounter;
+		string outName = "sFile_" + numStr.str();
 		std::cout << outName << endl;
 		fileNames.push_back(outName);
 		MergeTwoFiles(fileNames[stopIndex], fileNames[stopIndex + 1], outName);
 		remove(fileNames[stopIndex].c_str());
 		remove(fileNames[stopIndex+1].c_str());
 		stopIndex += 2;
+		mergeCounter++;
 	}
 	string oldName = fileNames[fileNames.size() - 1];
 	rename(oldName.c_str(), SavingFilePath.c_str());
