@@ -45,7 +45,7 @@ int CreateFile(string fileName, int size)
 		for (int i = 0; i < countOfDigits; i++){
 	  		fOut << rand();//%899+100;
 	  		if ((i+1)%10 == 0) fOut << "\n";
-	  		else fOut << "\t";
+	  		else fOut << "\n";
     	}
 		fOut.close();
 		return 0;
