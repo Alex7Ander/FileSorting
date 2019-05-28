@@ -1,0 +1,6 @@
+/home/alex/Projects/FileSorting/build/CMakeFiles/rebuild_cache.dir
+/home/alex/Projects/FileSorting/build/CMakeFiles/edit_cache.dir
+/home/alex/Projects/FileSorting/build/CMakeFiles/CorrectTest.dir
+/home/alex/Projects/FileSorting/build/CMakeFiles/FileSorting.dir
+/home/alex/Projects/FileSorting/build/CMakeFiles/test.dir
+/home/alex/Projects/FileSorting/build/CMakeFiles/CreateFile.dir

@@ -1,0 +1,1 @@
+/usr/bin/clang++   -lpthread -lgtest  -rdynamic CMakeFiles/CorrectTest.dir/Tests/CorrectTest.cpp.o CMakeFiles/CorrectTest.dir/FileSorting/SortingFunctions.cpp.o  -o CorrectTest -lgtest 

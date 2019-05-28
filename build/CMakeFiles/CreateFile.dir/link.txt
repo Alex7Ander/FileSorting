@@ -1,0 +1,1 @@
+/usr/bin/clang++   -lpthread -lgtest  -rdynamic CMakeFiles/CreateFile.dir/CreateFile/CreateFile.cpp.o  -o CreateFile 

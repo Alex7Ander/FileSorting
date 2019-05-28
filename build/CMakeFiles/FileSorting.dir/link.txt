@@ -1,0 +1,1 @@
+/usr/bin/clang++   -lpthread -lgtest  -rdynamic CMakeFiles/FileSorting.dir/FileSorting/main.cpp.o CMakeFiles/FileSorting.dir/FileSorting/SortingFunctions.cpp.o  -o FileSorting 

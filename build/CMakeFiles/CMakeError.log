@@ -1,0 +1,59 @@
+Determining if the pthread_create exist failed with the following output:
+Change Dir: /home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_46697/fast"
+make[1]: вход в каталог «/home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp»
+/usr/bin/make -f CMakeFiles/cmTC_46697.dir/build.make CMakeFiles/cmTC_46697.dir/build
+make[2]: вход в каталог «/home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp»
+Building CXX object CMakeFiles/cmTC_46697.dir/CheckSymbolExists.cxx.o
+/usr/bin/c++    -lpthread    -o CMakeFiles/cmTC_46697.dir/CheckSymbolExists.cxx.o -c /home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx
+Linking CXX executable cmTC_46697
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_46697.dir/link.txt --verbose=1
+/usr/bin/c++   -lpthread     -rdynamic CMakeFiles/cmTC_46697.dir/CheckSymbolExists.cxx.o  -o cmTC_46697 
+CMakeFiles/cmTC_46697.dir/CheckSymbolExists.cxx.o: In function `main':
+CheckSymbolExists.cxx:(.text+0x1b): undefined reference to `pthread_create'
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_46697.dir/build.make:97: recipe for target 'cmTC_46697' failed
+make[2]: *** [cmTC_46697] Error 1
+make[2]: выход из каталога «/home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp»
+Makefile:126: recipe for target 'cmTC_46697/fast' failed
+make[1]: *** [cmTC_46697/fast] Error 2
+make[1]: выход из каталога «/home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp»
+
+File /home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp/CheckSymbolExists.cxx:
+/* */
+#include <pthread.h>
+
+int main(int argc, char** argv)
+{
+  (void)argv;
+#ifndef pthread_create
+  return ((int*)(&pthread_create))[argc];
+#else
+  (void)argc;
+  return 0;
+#endif
+}
+
+Determining if the function pthread_create exists in the pthreads failed with the following output:
+Change Dir: /home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp
+
+Run Build Command:"/usr/bin/make" "cmTC_50ae0/fast"
+make[1]: вход в каталог «/home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp»
+/usr/bin/make -f CMakeFiles/cmTC_50ae0.dir/build.make CMakeFiles/cmTC_50ae0.dir/build
+make[2]: вход в каталог «/home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp»
+Building CXX object CMakeFiles/cmTC_50ae0.dir/CheckFunctionExists.cxx.o
+/usr/bin/c++    -lpthread -DCHECK_FUNCTION_EXISTS=pthread_create   -o CMakeFiles/cmTC_50ae0.dir/CheckFunctionExists.cxx.o -c /home/alex/Projects/FileSorting/build/CMakeFiles/CheckLibraryExists/CheckFunctionExists.cxx
+Linking CXX executable cmTC_50ae0
+/usr/bin/cmake -E cmake_link_script CMakeFiles/cmTC_50ae0.dir/link.txt --verbose=1
+/usr/bin/c++   -lpthread -DCHECK_FUNCTION_EXISTS=pthread_create    -rdynamic CMakeFiles/cmTC_50ae0.dir/CheckFunctionExists.cxx.o  -o cmTC_50ae0 -lpthreads 
+/usr/bin/ld: cannot find -lpthreads
+collect2: error: ld returned 1 exit status
+CMakeFiles/cmTC_50ae0.dir/build.make:97: recipe for target 'cmTC_50ae0' failed
+make[2]: *** [cmTC_50ae0] Error 1
+make[2]: выход из каталога «/home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp»
+Makefile:126: recipe for target 'cmTC_50ae0/fast' failed
+make[1]: *** [cmTC_50ae0/fast] Error 2
+make[1]: выход из каталога «/home/alex/Projects/FileSorting/build/CMakeFiles/CMakeTmp»
+
+
