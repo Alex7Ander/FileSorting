@@ -1,9 +1,8 @@
-#include <iostream>
-#include <thread>
-
 #include "SortingFunctions.h"
 
 using namespace std;
+
+//condition_variable nextStep;
 
 int main(int argc, char* argv[])
 {
@@ -20,21 +19,57 @@ int main(int argc, char* argv[])
 		cout << "RAM limit is: " << ramLimit << endl;
 		ramLimit *= 1024;
 		ramLimit *= 1024;
-		int availableSize = ramLimit / 2;
+		
+		condition_variable nextStep;
+		ifstream fIn;
+		fIn.open(initialFilePath);
+		if (fIn.is_open()){
+			fIn.close();
+			FileSorter *sorter = new FileSorter(initialFilePath, savingFilePath, ramLimit);	
+			thread splittingThread((&FileSorter::SplitingIntoSortedParts), sorter, std::ref(nextStep));		
+			char stepSymbols[] = "----------";
+			int step = 0;		
+			do{			
+				if (step>9){ 
+					step = 0;
+					for(int i=0; i<10; i++) stepSymbols[i] = '-';
+				}
+				stepSymbols[step] = '+';
+				step++;
 
-		int CountOfNumbers = availableSize / sizeof(int);
-		vector<int> ValuesNumbers;
-		vector<string> OutFilesNames;
-	
-		int resOfSpliting = SplitingIntoSortedParts(initialFilePath, OutFilesNames, CountOfNumbers, ValuesNumbers);
-		if (!resOfSpliting){ 
-			cout << "Error opening file! Maybe it doesn't exist anymore?" << endl;
-			return -2;
+				mutex mtx;
+				unique_lock<mutex> uLock(mtx);
+				nextStep.wait(uLock);
+				cout << "Splitting " << stepSymbols << "\r";
+				cout.flush();
+			}while(!sorter->getSplittedStatus());
+			splittingThread.join();
+			cout << "\r=== Splitting done ===" << endl;
+
+			for(int i=0; i<10; i++) stepSymbols[i] = '-';
+			thread mergingThread((&FileSorter::MergeFiles), sorter, std::ref(nextStep));
+			step = 0;
+			do{			
+				if (step>9){ 
+					step = 0;
+					for(int i=0; i<10; i++) stepSymbols[i] = '-';
+				}
+				stepSymbols[step] = '+';
+				step++;
+
+				mutex mtx;
+				unique_lock<mutex> uLock(mtx);
+				nextStep.wait(uLock);
+				cout << "Merging " << stepSymbols << "\r";
+				cout.flush();
+			}while(!sorter->getMergedStatus());
+			mergingThread.join();
+			cout << "\r=== Merging done ===" << endl;
+			return 0;
 		}
 		else{
-			MergeFiles(OutFilesNames, savingFilePath);
-			cout << "Done" << endl;
-			return 0;
+			cout << "Error opening file! Maybe it doesn't exist anymore?" << endl;
+			return -2;
 		}		
 	}
 	else{

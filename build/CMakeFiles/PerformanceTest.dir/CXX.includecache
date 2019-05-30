@@ -6,6 +6,26 @@
 
 #IncludeRegexTransform: 
 
+.././FileSorting/SortingFunctions.h
+iostream
+-
+fstream
+-
+string
+-
+sstream
+-
+vector
+-
+queue
+-
+thread
+-
+condition_variable
+-
+stdio.h
+-
+
 /home/alex/Projects/FileSorting/FileSorting/SortingFunctions.cpp
 SortingFunctions.h
 /home/alex/Projects/FileSorting/FileSorting/SortingFunctions.h
@@ -30,7 +50,15 @@ condition_variable
 stdio.h
 -
 
-/home/alex/Projects/FileSorting/FileSorting/main.cpp
+/home/alex/Projects/FileSorting/Tests/PerformanceTest.cpp
+iostream
+-
+chrono
+-
+string
+-
+gtest/gtest.h
+-
 SortingFunctions.h
-/home/alex/Projects/FileSorting/FileSorting/SortingFunctions.h
+-
 

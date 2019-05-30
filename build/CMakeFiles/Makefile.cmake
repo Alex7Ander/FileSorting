@@ -46,7 +46,8 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/CorrectTest.dir/DependInfo.cmake"
-  "CMakeFiles/FileSorting.dir/DependInfo.cmake"
   "CMakeFiles/CreateFile.dir/DependInfo.cmake"
+  "CMakeFiles/FileSorting.dir/DependInfo.cmake"
+  "CMakeFiles/CorrectTest.dir/DependInfo.cmake"
+  "CMakeFiles/PerformanceTest.dir/DependInfo.cmake"
   )

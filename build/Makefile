@@ -67,17 +67,6 @@ rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target test
 test:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
@@ -88,6 +77,17 @@ test:
 test/fast: test
 
 .PHONY : test/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	/usr/bin/cmake -E echo No\ interactive\ CMake\ dialog\ available.
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -122,17 +122,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named CorrectTest
+# Target rules for targets named CreateFile
 
 # Build rule for target.
-CorrectTest: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 CorrectTest
-.PHONY : CorrectTest
+CreateFile: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 CreateFile
+.PHONY : CreateFile
 
 # fast build rule for target.
-CorrectTest/fast:
-	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/build
-.PHONY : CorrectTest/fast
+CreateFile/fast:
+	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/build
+.PHONY : CreateFile/fast
 
 #=============================================================================
 # Target rules for targets named FileSorting
@@ -148,17 +148,30 @@ FileSorting/fast:
 .PHONY : FileSorting/fast
 
 #=============================================================================
-# Target rules for targets named CreateFile
+# Target rules for targets named CorrectTest
 
 # Build rule for target.
-CreateFile: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 CreateFile
-.PHONY : CreateFile
+CorrectTest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 CorrectTest
+.PHONY : CorrectTest
 
 # fast build rule for target.
-CreateFile/fast:
-	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/build
-.PHONY : CreateFile/fast
+CorrectTest/fast:
+	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/build
+.PHONY : CorrectTest/fast
+
+#=============================================================================
+# Target rules for targets named PerformanceTest
+
+# Build rule for target.
+PerformanceTest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 PerformanceTest
+.PHONY : PerformanceTest
+
+# fast build rule for target.
+PerformanceTest/fast:
+	$(MAKE) -f CMakeFiles/PerformanceTest.dir/build.make CMakeFiles/PerformanceTest.dir/build
+.PHONY : PerformanceTest/fast
 
 CreateFile/CreateFile.o: CreateFile/CreateFile.cpp.o
 
@@ -193,8 +206,9 @@ FileSorting/SortingFunctions.o: FileSorting/SortingFunctions.cpp.o
 
 # target to build an object file
 FileSorting/SortingFunctions.cpp.o:
-	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/FileSorting/SortingFunctions.cpp.o
 	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/FileSorting/SortingFunctions.cpp.o
+	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/FileSorting/SortingFunctions.cpp.o
+	$(MAKE) -f CMakeFiles/PerformanceTest.dir/build.make CMakeFiles/PerformanceTest.dir/FileSorting/SortingFunctions.cpp.o
 .PHONY : FileSorting/SortingFunctions.cpp.o
 
 FileSorting/SortingFunctions.i: FileSorting/SortingFunctions.cpp.i
@@ -203,8 +217,9 @@ FileSorting/SortingFunctions.i: FileSorting/SortingFunctions.cpp.i
 
 # target to preprocess a source file
 FileSorting/SortingFunctions.cpp.i:
-	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/FileSorting/SortingFunctions.cpp.i
 	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/FileSorting/SortingFunctions.cpp.i
+	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/FileSorting/SortingFunctions.cpp.i
+	$(MAKE) -f CMakeFiles/PerformanceTest.dir/build.make CMakeFiles/PerformanceTest.dir/FileSorting/SortingFunctions.cpp.i
 .PHONY : FileSorting/SortingFunctions.cpp.i
 
 FileSorting/SortingFunctions.s: FileSorting/SortingFunctions.cpp.s
@@ -213,8 +228,9 @@ FileSorting/SortingFunctions.s: FileSorting/SortingFunctions.cpp.s
 
 # target to generate assembly for a file
 FileSorting/SortingFunctions.cpp.s:
-	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/FileSorting/SortingFunctions.cpp.s
 	$(MAKE) -f CMakeFiles/FileSorting.dir/build.make CMakeFiles/FileSorting.dir/FileSorting/SortingFunctions.cpp.s
+	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/FileSorting/SortingFunctions.cpp.s
+	$(MAKE) -f CMakeFiles/PerformanceTest.dir/build.make CMakeFiles/PerformanceTest.dir/FileSorting/SortingFunctions.cpp.s
 .PHONY : FileSorting/SortingFunctions.cpp.s
 
 FileSorting/main.o: FileSorting/main.cpp.o
@@ -271,6 +287,33 @@ Tests/CorrectTest.cpp.s:
 	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/Tests/CorrectTest.cpp.s
 .PHONY : Tests/CorrectTest.cpp.s
 
+Tests/PerformanceTest.o: Tests/PerformanceTest.cpp.o
+
+.PHONY : Tests/PerformanceTest.o
+
+# target to build an object file
+Tests/PerformanceTest.cpp.o:
+	$(MAKE) -f CMakeFiles/PerformanceTest.dir/build.make CMakeFiles/PerformanceTest.dir/Tests/PerformanceTest.cpp.o
+.PHONY : Tests/PerformanceTest.cpp.o
+
+Tests/PerformanceTest.i: Tests/PerformanceTest.cpp.i
+
+.PHONY : Tests/PerformanceTest.i
+
+# target to preprocess a source file
+Tests/PerformanceTest.cpp.i:
+	$(MAKE) -f CMakeFiles/PerformanceTest.dir/build.make CMakeFiles/PerformanceTest.dir/Tests/PerformanceTest.cpp.i
+.PHONY : Tests/PerformanceTest.cpp.i
+
+Tests/PerformanceTest.s: Tests/PerformanceTest.cpp.s
+
+.PHONY : Tests/PerformanceTest.s
+
+# target to generate assembly for a file
+Tests/PerformanceTest.cpp.s:
+	$(MAKE) -f CMakeFiles/PerformanceTest.dir/build.make CMakeFiles/PerformanceTest.dir/Tests/PerformanceTest.cpp.s
+.PHONY : Tests/PerformanceTest.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -278,11 +321,12 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... rebuild_cache"
-	@echo "... edit_cache"
-	@echo "... CorrectTest"
-	@echo "... FileSorting"
-	@echo "... test"
 	@echo "... CreateFile"
+	@echo "... test"
+	@echo "... FileSorting"
+	@echo "... CorrectTest"
+	@echo "... PerformanceTest"
+	@echo "... edit_cache"
 	@echo "... CreateFile/CreateFile.o"
 	@echo "... CreateFile/CreateFile.i"
 	@echo "... CreateFile/CreateFile.s"
@@ -295,6 +339,9 @@ help:
 	@echo "... Tests/CorrectTest.o"
 	@echo "... Tests/CorrectTest.i"
 	@echo "... Tests/CorrectTest.s"
+	@echo "... Tests/PerformanceTest.o"
+	@echo "... Tests/PerformanceTest.i"
+	@echo "... Tests/PerformanceTest.s"
 .PHONY : help
 
 

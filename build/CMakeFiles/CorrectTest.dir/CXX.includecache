@@ -21,6 +21,8 @@ queue
 -
 thread
 -
+condition_variable
+-
 stdio.h
 -
 
@@ -43,11 +45,17 @@ queue
 -
 thread
 -
+condition_variable
+-
 stdio.h
 -
 
 /home/alex/Projects/FileSorting/Tests/CorrectTest.cpp
 iostream
+-
+string
+-
+algorithm
 -
 gtest/gtest.h
 -

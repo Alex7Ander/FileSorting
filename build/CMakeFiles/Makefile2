@@ -60,39 +60,39 @@ CMAKE_SOURCE_DIR = /home/alex/Projects/FileSorting
 CMAKE_BINARY_DIR = /home/alex/Projects/FileSorting/build
 
 #=============================================================================
-# Target rules for target CMakeFiles/CorrectTest.dir
+# Target rules for target CMakeFiles/CreateFile.dir
 
 # All Build rule for target.
-CMakeFiles/CorrectTest.dir/all:
-	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/depend
-	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/Projects/FileSorting/build/CMakeFiles --progress-num=1,2,3 "Built target CorrectTest"
-.PHONY : CMakeFiles/CorrectTest.dir/all
+CMakeFiles/CreateFile.dir/all:
+	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/depend
+	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/Projects/FileSorting/build/CMakeFiles --progress-num=4,5 "Built target CreateFile"
+.PHONY : CMakeFiles/CreateFile.dir/all
 
 # Include target in all.
-all: CMakeFiles/CorrectTest.dir/all
+all: CMakeFiles/CreateFile.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/CorrectTest.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/Projects/FileSorting/build/CMakeFiles 3
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/CorrectTest.dir/all
+CMakeFiles/CreateFile.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/Projects/FileSorting/build/CMakeFiles 2
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/CreateFile.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/Projects/FileSorting/build/CMakeFiles 0
-.PHONY : CMakeFiles/CorrectTest.dir/rule
+.PHONY : CMakeFiles/CreateFile.dir/rule
 
 # Convenience name for target.
-CorrectTest: CMakeFiles/CorrectTest.dir/rule
+CreateFile: CMakeFiles/CreateFile.dir/rule
 
-.PHONY : CorrectTest
-
-# clean rule for target.
-CMakeFiles/CorrectTest.dir/clean:
-	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/clean
-.PHONY : CMakeFiles/CorrectTest.dir/clean
+.PHONY : CreateFile
 
 # clean rule for target.
-clean: CMakeFiles/CorrectTest.dir/clean
+CMakeFiles/CreateFile.dir/clean:
+	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/clean
+.PHONY : CMakeFiles/CreateFile.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/CreateFile.dir/clean
 
 .PHONY : clean
 
@@ -134,39 +134,76 @@ clean: CMakeFiles/FileSorting.dir/clean
 .PHONY : clean
 
 #=============================================================================
-# Target rules for target CMakeFiles/CreateFile.dir
+# Target rules for target CMakeFiles/CorrectTest.dir
 
 # All Build rule for target.
-CMakeFiles/CreateFile.dir/all:
-	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/depend
-	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/Projects/FileSorting/build/CMakeFiles --progress-num=4,5 "Built target CreateFile"
-.PHONY : CMakeFiles/CreateFile.dir/all
+CMakeFiles/CorrectTest.dir/all:
+	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/depend
+	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/Projects/FileSorting/build/CMakeFiles --progress-num=1,2,3 "Built target CorrectTest"
+.PHONY : CMakeFiles/CorrectTest.dir/all
 
 # Include target in all.
-all: CMakeFiles/CreateFile.dir/all
+all: CMakeFiles/CorrectTest.dir/all
 
 .PHONY : all
 
 # Build rule for subdir invocation for target.
-CMakeFiles/CreateFile.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/Projects/FileSorting/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/CreateFile.dir/all
+CMakeFiles/CorrectTest.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/Projects/FileSorting/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/CorrectTest.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/Projects/FileSorting/build/CMakeFiles 0
-.PHONY : CMakeFiles/CreateFile.dir/rule
+.PHONY : CMakeFiles/CorrectTest.dir/rule
 
 # Convenience name for target.
-CreateFile: CMakeFiles/CreateFile.dir/rule
+CorrectTest: CMakeFiles/CorrectTest.dir/rule
 
-.PHONY : CreateFile
-
-# clean rule for target.
-CMakeFiles/CreateFile.dir/clean:
-	$(MAKE) -f CMakeFiles/CreateFile.dir/build.make CMakeFiles/CreateFile.dir/clean
-.PHONY : CMakeFiles/CreateFile.dir/clean
+.PHONY : CorrectTest
 
 # clean rule for target.
-clean: CMakeFiles/CreateFile.dir/clean
+CMakeFiles/CorrectTest.dir/clean:
+	$(MAKE) -f CMakeFiles/CorrectTest.dir/build.make CMakeFiles/CorrectTest.dir/clean
+.PHONY : CMakeFiles/CorrectTest.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/CorrectTest.dir/clean
+
+.PHONY : clean
+
+#=============================================================================
+# Target rules for target CMakeFiles/PerformanceTest.dir
+
+# All Build rule for target.
+CMakeFiles/PerformanceTest.dir/all:
+	$(MAKE) -f CMakeFiles/PerformanceTest.dir/build.make CMakeFiles/PerformanceTest.dir/depend
+	$(MAKE) -f CMakeFiles/PerformanceTest.dir/build.make CMakeFiles/PerformanceTest.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/alex/Projects/FileSorting/build/CMakeFiles --progress-num=9,10,11 "Built target PerformanceTest"
+.PHONY : CMakeFiles/PerformanceTest.dir/all
+
+# Include target in all.
+all: CMakeFiles/PerformanceTest.dir/all
+
+.PHONY : all
+
+# Build rule for subdir invocation for target.
+CMakeFiles/PerformanceTest.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/Projects/FileSorting/build/CMakeFiles 3
+	$(MAKE) -f CMakeFiles/Makefile2 CMakeFiles/PerformanceTest.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/alex/Projects/FileSorting/build/CMakeFiles 0
+.PHONY : CMakeFiles/PerformanceTest.dir/rule
+
+# Convenience name for target.
+PerformanceTest: CMakeFiles/PerformanceTest.dir/rule
+
+.PHONY : PerformanceTest
+
+# clean rule for target.
+CMakeFiles/PerformanceTest.dir/clean:
+	$(MAKE) -f CMakeFiles/PerformanceTest.dir/build.make CMakeFiles/PerformanceTest.dir/clean
+.PHONY : CMakeFiles/PerformanceTest.dir/clean
+
+# clean rule for target.
+clean: CMakeFiles/PerformanceTest.dir/clean
 
 .PHONY : clean
 

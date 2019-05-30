@@ -1,0 +1,1 @@
+/usr/bin/clang++   -lpthread -lgtest  -rdynamic CMakeFiles/PerformanceTest.dir/Tests/PerformanceTest.cpp.o CMakeFiles/PerformanceTest.dir/FileSorting/SortingFunctions.cpp.o  -o PerformanceTest -lgtest 

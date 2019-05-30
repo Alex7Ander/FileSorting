@@ -1,54 +1,87 @@
 #include "SortingFunctions.h"
 //----------------------------------------------------------------
-int SplitingIntoSortedParts(string fileName, vector<string> &outFilesNames, int countOfNumbers, vector<int> &values)
+void FileSorter::SplitingIntoSortedParts(condition_variable &NextStep)
 {
 	ifstream fIn;
 	int countOfRead = 0;
-	fIn.open(fileName.c_str());
+	fIn.open(this->initialFileName.c_str());
 	if (fIn.is_open()) {
-		values.clear();
+		this->values.clear();
 		char buffer[20];		
 		int countOfParts = 0;
-		std::cout << "Start splitting" << std::endl;
-		while (!fIn.eof()){			
-			values.clear();
-			for (int i = 0; i < countOfNumbers; i++){
+		while (!fIn.eof()){		
+			this->values.clear();
+			for (int i = 0; i < this->countOfValues; i++){
 				if (!fIn.eof()){
 					fIn >> buffer;
 					int value = atoi(buffer);
-					values.push_back(value);
+					this->values.push_back(value);
 				}
 				else{
 					break;
 				}								
 			}
+			NextStep.notify_one();
 			countOfParts++;
-			std::cout << "Part number " << countOfParts + 1 << " was read\t";
-			MergeSorting(values, 0, values.size()-1);
-			std::cout << "sorted\t";
+			this->MergeSorting(this->values, 0, this->values.size()-1);
 			stringstream numStr;
 			numStr << countOfParts;
 			string fileOutPath = "sFile" + numStr.str();
-			WriteFile(fileOutPath.c_str(), values, values.size());
-			outFilesNames.push_back(fileOutPath);
-			std::cout << "writen." << std::endl << "------------------------" << std::endl;
+			this->WriteFile(fileOutPath.c_str(), this->values, this->values.size());
+			this->tempOutFilesNames.push_back(fileOutPath);
 		}
-		return countOfParts;
-	}
-	else {
-		return -1;
+		this->splitted = true;
+		NextStep.notify_one();
 	}
 }
 //----------------------------------------------------------------
-void MergeTwoFiles(mergingFilesStruct mergingInfo)
+void FileSorter::MergeFiles(condition_variable &NextStep)
+{ 
+	int mergeCounter = 1;
+	queue<string> mergingFiles;
+	for (int i=0; i<this->tempOutFilesNames.size(); i++)
+		mergingFiles.push(this->tempOutFilesNames[i]);
+
+	do{
+		int countOfThreads = mergingFiles.size()/2;
+		for (int i=0; i<countOfThreads; i++){
+			string fileName1 = mergingFiles.front();
+			mergingFiles.pop();
+			string fileName2 = mergingFiles.front();
+			mergingFiles.pop();	
+			stringstream numStr;
+			numStr << mergeCounter;
+			string outName = "sFile_" + numStr.str();
+			this->tempOutFilesNames.push_back(outName);
+			mergingFiles.push(outName);
+			thread myThr((&FileSorter::MergeTwoFiles), this, fileName1, fileName2, outName);
+			myThr.join();
+			mergeCounter++;
+			NextStep.notify_one();
+		}
+	}while (mergingFiles.size()>1);
+
+	string oldName = this->tempOutFilesNames[this->tempOutFilesNames.size() - 1];
+	rename(oldName.c_str(), this->outFileName.c_str());
+	for (int i=0; i<this->tempOutFilesNames.size()-1; i++) {
+		remove(this->tempOutFilesNames[i].c_str());
+		NextStep.notify_one();
+	}
+	this->merged = true;
+	NextStep.notify_one();
+}
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+//----------------------------------------------------------------
+void FileSorter::MergeTwoFiles(string fileName1, string fileName2, string outName)
 {	
 	ifstream file1;
 	ifstream file2;
-	file1.open(mergingInfo.fileName1.c_str());
-	file2.open(mergingInfo.fileName2.c_str());
+	file1.open(fileName1.c_str());
+	file2.open(fileName2.c_str());
 	if (file1.is_open() && file2.is_open()){
 		ofstream fileOut;
-		fileOut.open(mergingInfo.outName.c_str());
+		fileOut.open(outName.c_str());
 		if (fileOut.is_open()){
 			bool stepFile1 = true; //флаг, указывающий на то, что надо прочитать следующее значение из 1-го файла
 			bool stepFile2 = true; //аналогично но для 2-го файла
@@ -124,67 +157,9 @@ void MergeTwoFiles(mergingFilesStruct mergingInfo)
 			fileOut.close();
 		} //end if (fileOut.is_open())
 	}// end if (file1.is_open() && file2.is_open())
-
-	cout << "Out file is " << mergingInfo.outName.c_str() << endl;
 }
 //----------------------------------------------------------------
-void MergeFiles(vector<string> &fileNames, string SavingFilePath)
-{
-	int mergeCounter = 1;
-	queue<string> mergingFiles;
-	for (int i=0; i<fileNames.size(); i++)
-		mergingFiles.push(fileNames[i]);
-
-	do{
-		int countOfThreads = mergingFiles.size()/2;
-		vector<thread*> mergingThreads;
-
-		for (int i=0; i<countOfThreads; i++){
-			mergingFilesStruct mergingStruct;
-			mergingStruct.fileName1 = mergingFiles.front();
-			mergingFiles.pop();
-			mergingStruct.fileName2 = mergingFiles.front();
-			mergingFiles.pop();	
-			stringstream numStr;
-			numStr << mergeCounter;
-			mergingStruct.outName = "sFile_" + numStr.str();
-			fileNames.push_back(mergingStruct.outName);
-			mergingFiles.push(mergingStruct.outName);
-
-			cout << "Thread #" << mergeCounter << ".\t Merging of " <<  mergingStruct.fileName1.c_str() << " and " << mergingStruct.fileName2.c_str() << " into " << mergingStruct.outName.c_str() << endl;
-			thread *mergThread = new thread(MergeTwoFiles, mergingStruct);
-			mergingThreads.push_back(mergThread);
-			mergingThreads[i]->join();
-			mergeCounter++;
-		}
-	}while (mergingFiles.size()>1);
-
-	string oldName = fileNames[fileNames.size() - 1];
-	rename(oldName.c_str(), SavingFilePath.c_str());
-	for (int i=0; i<fileNames.size()-1; i++) {
-		cout << "Deleteing of " << fileNames[i].c_str() << endl;
-		remove(fileNames[i].c_str());
-	}
-}
-//----------------------------------------------------------------
-//----------------------------------------------------------------
-//----------------------------------------------------------------
-void WriteFile(string fileName, vector<int>& data, int size)
-{
-	ofstream fOut;
-	fOut.open(fileName.c_str());
-	for (int i = 0; i < size-1; i++) {
-		fOut << data[i];
-		if ((i + 1) % 10 == 0) fOut << "\n";
-		else fOut << "\t";
-	}
-	fOut << data[size-1];
-	//fOut << endl;
-	fOut.close();
-	return;
-}
-//----------------------------------------------------------------
-void MergeSorting(vector<int> & array, int left, int right)
+void FileSorter::MergeSorting(vector<int> & array, int left, int right)
 {
 	if (left == right) return;
 	if (right - left == 1) {
@@ -209,5 +184,19 @@ void MergeSorting(vector<int> & array, int left, int right)
 	}
 	for (int step = 0; step < right - left + 1; step++)
 		array[left + step] = tempArray[step];
+}
+//----------------------------------------------------------------
+void inline FileSorter::WriteFile(string fileName, vector<int>& data, int size)
+{
+	ofstream fOut;
+	fOut.open(fileName.c_str());
+	for (int i = 0; i < size-1; i++) {
+		fOut << data[i];
+		if ((i + 1) % 10 == 0) fOut << "\n";
+		else fOut << "\t";
+	}
+	fOut << data[size-1];
+	fOut.close();
+	return;
 }
 //----------------------------------------------------------------
