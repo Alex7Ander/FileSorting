@@ -2,8 +2,6 @@
 
 using namespace std;
 
-//condition_variable nextStep;
-
 int main(int argc, char* argv[])
 {
 	string initialFilePath;
@@ -15,10 +13,10 @@ int main(int argc, char* argv[])
 		savingFilePath = argv[2];
 		ramLimit = atoi(argv[3]);
 		cout << "Initial file is " << initialFilePath << endl;
-		cout << "Sorted file will ba saved in: " << savingFilePath << endl;
+		cout << "Sorted file will be saved in: " << savingFilePath << endl;
 		cout << "RAM limit is: " << ramLimit << endl;
-		ramLimit *= 1024;
-		ramLimit *= 1024;
+		ramLimit *= 1024; // MByte -> kByte
+		ramLimit *= 1024; // kByte -> Byte
 		
 		condition_variable nextStep;
 		ifstream fIn;

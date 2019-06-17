@@ -58,7 +58,6 @@ int main(int argc, char* argv[])
 
 void CreateFile(fileCrtParams &params)
 {
-	mutex mtx;
 	ofstream fOut;
 	fOut.open(params.fileName.c_str());
 	if (fOut.is_open()){
