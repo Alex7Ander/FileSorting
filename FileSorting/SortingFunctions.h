@@ -9,7 +9,7 @@
 #include <stdio.h>
 
 using namespace std;
-
+/// Этот класс очень плохо спроектирован, все методы публичные, интерфейс плохой
 class FileSorter{
 private:
 	void inline WriteFile(string fileName, vector<int>& data, int size);
@@ -17,7 +17,7 @@ private:
 	bool merged;
 	string initialFileName;
 	string outFileName;
-	int ramLimit;
+	int ramLimit; /// Не используется
 	vector<string> tempOutFilesNames;
 	int countOfValues;
 	vector<int> values;
