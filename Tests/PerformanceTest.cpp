@@ -5,7 +5,7 @@
 #include <SortingFunctions.h>
 
 using namespace std;
-
+/*
 chrono::duration<float> SortingProcedure(string initialFilePath, string savingFilePath, int ramLimit){
 
 	auto start = chrono::high_resolution_clock::now();
@@ -90,7 +90,7 @@ TEST(PerformanceTest, wrongPath)
 	auto duration = SortingProcedure(initialFilePath, savingFilePath, ramLimit);
 	cout << "Time of working till error is :" << duration.count() << endl;
 }
-
+*/
 int main(int argc, char **argv)
 {
 	testing::InitGoogleTest(&argc, argv);

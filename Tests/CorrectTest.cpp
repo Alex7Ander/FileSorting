@@ -60,7 +60,7 @@ void CreateFilesForMerging(string file_1_Name, string file_2_Name, vector<int> &
 	}
 return;
 }
-
+/*
 //Тестирование алгоритма сортировки вставками
 //применялся для сортировки значений во временных файлах
 TEST(SortingAlgTest, _30valuesTest)
@@ -76,7 +76,8 @@ TEST(SortingAlgTest, _30valuesTest)
 		ASSERT_TRUE(realValue==expectedValue);
 	}
 }
-
+*/
+/*
 //аналогично, но для большего количеств значений, проверка относительно алгоритма из STL
 TEST(CorrectTest, TestBySTLSort)
 {
@@ -94,8 +95,9 @@ TEST(CorrectTest, TestBySTLSort)
 		ASSERT_TRUE(realValues[i] == expectedValues[i]);
 	}
 }
-
+*/
 //тест алгоритма слияния 2-х файлов
+/*
 TEST(MergingTest, FileMergingAlgTest)
 {
 	vector<int> values;
@@ -118,7 +120,7 @@ TEST(MergingTest, FileMergingAlgTest)
 	}
 	fileIn.close();
 }
-
+*/
 int main(int argc, char **argv)
 {
 	cout << "Let's start testing!!!" << endl;
