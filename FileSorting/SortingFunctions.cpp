@@ -46,8 +46,11 @@ int FileSorter::SplitingIntoSortedParts()
 			this->WriteFile(numStr.str().c_str(), values);
 			this->mergingFiles.push(numStr.str());
 		}
+		return 0;
 	}
-	return 0;
+	else{
+		return 1;
+	}
 }
 //----------------------------------------------------------------
 int FileSorter::MergeFiles()

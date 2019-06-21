@@ -1,10 +1,10 @@
-Start testing: Jun 21 23:17 MSK
+Start testing: Jun 21 23:57 MSK
 ----------------------------------------------------------
 1/2 Testing: CorrectTest
 1/2 Test: CorrectTest
 Command: "/home/alex/Projects/FileSorting/build/CorrectTest"
 Directory: /home/alex/Projects/FileSorting/build
-"CorrectTest" start time: Jun 21 23:17 MSK
+"CorrectTest" start time: Jun 21 23:57 MSK
 Output:
 ----------------------------------------------------------
 Let's start testing!!!
@@ -12,25 +12,17 @@ Let's start testing!!!
 [----------] Global test environment set-up.
 [----------] 1 test from CorrectTest
 [ RUN      ] CorrectTest.TestOfSortingFile
-/home/alex/Projects/FileSorting/Tests/CorrectTest.cpp:24: Failure
-Value of: false
-  Actual: false
-Expected: true
-[  FAILED  ] CorrectTest.TestOfSortingFile (0 ms)
-[----------] 1 test from CorrectTest (0 ms total)
+[       OK ] CorrectTest.TestOfSortingFile (584 ms)
+[----------] 1 test from CorrectTest (584 ms total)
 
 [----------] Global test environment tear-down
-[==========] 1 test from 1 test case ran. (0 ms total)
-[  PASSED  ] 0 tests.
-[  FAILED  ] 1 test, listed below:
-[  FAILED  ] CorrectTest.TestOfSortingFile
-
- 1 FAILED TEST
+[==========] 1 test from 1 test case ran. (584 ms total)
+[  PASSED  ] 1 test.
 <end of output>
-Test time =   0.00 sec
+Test time =   0.59 sec
 ----------------------------------------------------------
-Test Failed.
-"CorrectTest" end time: Jun 21 23:17 MSK
+Test Passed.
+"CorrectTest" end time: Jun 21 23:57 MSK
 "CorrectTest" time elapsed: 00:00:00
 ----------------------------------------------------------
 
@@ -38,18 +30,33 @@ Test Failed.
 2/2 Test: PerformanceTest
 Command: "/home/alex/Projects/FileSorting/build/PerformanceTest"
 Directory: /home/alex/Projects/FileSorting/build
-"PerformanceTest" start time: Jun 21 23:17 MSK
+"PerformanceTest" start time: Jun 21 23:57 MSK
 Output:
 ----------------------------------------------------------
-[==========] Running 0 tests from 0 test cases.
-[==========] 0 tests from 0 test cases ran. (0 ms total)
-[  PASSED  ] 0 tests.
+[==========] Running 2 tests from 1 test case.
+[----------] Global test environment set-up.
+[----------] 2 tests from PerformanceTest
+[ RUN      ] PerformanceTest.timeOfFullWorking
+             Part №: : 0              Part №: : 1               Part №: : 2                Part №: : 3                 Part №: : 4                  Part №: : 5                   Part №: : 6                    Part №: : 7                     Part №: : 8                      Part №: : 9                       Part №: : 10                        Part №: : 11                         Part №: : 12                                   Files for merging: : 13                             Files for merging: : 7                          Files for merging: : 4                        Files for merging: : 2
+DONE!
+Time of working is :8.11417
+[       OK ] PerformanceTest.timeOfFullWorking (8114 ms)
+[ RUN      ] PerformanceTest.wrongPath
+
+ERROR!
+Time of working till error is :1.2008e-05
+[       OK ] PerformanceTest.wrongPath (0 ms)
+[----------] 2 tests from PerformanceTest (8115 ms total)
+
+[----------] Global test environment tear-down
+[==========] 2 tests from 1 test case ran. (8115 ms total)
+[  PASSED  ] 2 tests.
 <end of output>
-Test time =   0.00 sec
+Test time =   8.12 sec
 ----------------------------------------------------------
 Test Passed.
-"PerformanceTest" end time: Jun 21 23:17 MSK
-"PerformanceTest" time elapsed: 00:00:00
+"PerformanceTest" end time: Jun 21 23:58 MSK
+"PerformanceTest" time elapsed: 00:00:08
 ----------------------------------------------------------
 
-End testing: Jun 21 23:17 MSK
+End testing: Jun 21 23:58 MSK
