@@ -2,9 +2,13 @@
 //----------------------------------------------------------------
 int FileSorter::operator()()
 {
-	if (!this->SplitingIntoSortedParts())
+	if (!this->SplitingIntoSortedParts()){
 		this->MergeFiles();
-	return 0;
+		return 0;
+	}
+	else{
+		return 1;
+	}	
 }
 //----------------------------------------------------------------
 int FileSorter::SplitingIntoSortedParts()
@@ -39,7 +43,7 @@ int FileSorter::SplitingIntoSortedParts()
 			std::sort(values.begin(), values.end());
 			stringstream numStr;
 			numStr << "sFile" << countOfParts; /// Может сразу << "sFile" << countOfParts и переменная fileOutPath не нужна
-			this->WriteFile(numStr.str().c_str(), values, values.size());
+			this->WriteFile(numStr.str().c_str(), values);
 			this->mergingFiles.push(numStr.str());
 		}
 	}
@@ -95,7 +99,7 @@ int FileSorter::MergeTwoFiles(string fileName1, string fileName2, string outName
 	return 0;
 }
 //----------------------------------------------------------------
-void inline FileSorter::WriteFile(string fileName, vector<int>& data, int size) /// Параметры передаются не по const&
+void inline FileSorter::WriteFile(const string& fileName, const vector<int>& data) /// Параметры передаются не по const&
 {
 	ofstream outFile;
 	outFile.open(fileName.c_str()); /// Тут нет проверки is_open, не думаю, что это правильный способ использования fstream, но все же

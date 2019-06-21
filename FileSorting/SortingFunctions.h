@@ -20,7 +20,7 @@ public:
 
 	void ShowProgress(string _ProgressString, int _Progress){
 		string empty;
-		for (int i=0; i<(_ProgressString.length() + _Progress + 3); i++)
+		for (int i = 0; i < (_ProgressString.length() + _Progress + 3); i++)
 			empty.push_back(' ');
 		cout << empty << "\r";
 		cout << _ProgressString.c_str() << ": " << _Progress << "\r";
@@ -37,7 +37,7 @@ private:
 	queue<string> mergingFiles;
 	int countOfValues;
 
-	void inline WriteFile(string fileName, vector<int>& data, int size);
+	void inline WriteFile(const string& fileName, const vector<int>& data);
 	int inline MergeTwoFiles(string fileName1, string fileName2, string outName);
 
 	int SplitingIntoSortedParts();
