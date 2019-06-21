@@ -27,6 +27,10 @@ thread
 -
 condition_variable
 -
+algorithm
+-
+iterator
+-
 stdio.h
 -
 

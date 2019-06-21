@@ -23,6 +23,10 @@ thread
 -
 condition_variable
 -
+algorithm
+-
+iterator
+-
 stdio.h
 -
 
@@ -46,6 +50,10 @@ queue
 thread
 -
 condition_variable
+-
+algorithm
+-
+iterator
 -
 stdio.h
 -
