@@ -9,7 +9,7 @@ using namespace std;
 TEST(CorrectTest, TestOfSortingFile)
 {
 	ifstream testFile;
-	testFile.open("./sortedTestFile");
+	testFile.open("fileOutOfTest");
 	if (testFile.is_open()){
 		int prevValue;
 		testFile >> prevValue;

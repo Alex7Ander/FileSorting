@@ -23,5 +23,5 @@ target_link_libraries(CorrectTest ${GTEST_LIBRARIES})
 target_link_libraries(PerformanceTest ${GTEST_LIBRARIES})
 
 enable_testing()
-add_test(CorrectTest CorrectTest)
 add_test(PerformanceTest PerformanceTest)
+add_test(CorrectTest CorrectTest)

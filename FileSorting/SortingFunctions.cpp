@@ -1,34 +1,37 @@
 #include "SortingFunctions.h"
 //----------------------------------------------------------------
-int FileSorter::operator()()
+Monitor* Monitor::instanceMonitor = nullptr;
+//----------------------------------------------------------------
+int FileSorter::makeSorting()
 {
-	if (!this->SplitingIntoSortedParts()){
-		this->MergeFiles();
-		return 0;
+	if (this->SplitingIntoSortedParts()){		
+		return 1;
 	}
-	else{
+	if(this->MergeFiles()){
 		return 1;
 	}	
+	return 0;
 }
 //----------------------------------------------------------------
 int FileSorter::SplitingIntoSortedParts()
 {
-	/// В этом методе отсутвует обработка ошибок
 	ifstream fIn;
 	int countOfRead = 0;
 	fIn.open(this->initialFileName.c_str());
 	if (fIn.is_open()) {
 		vector<int> values;
-		char buffer[20] = {0};		/// = {0}, переменные лучше всегда инициализировать
+		char buffer[20] = {0};
 		int countOfParts = 0;
 		while (!fIn.eof()){
-			monitor.ShowProgress("Part №: ", countOfParts);		
+			stringstream message;
+			message <<  "Part №: " << countOfParts;
+			this->monitor->ShowMessage(message.str());		
 			values.clear();
 			for (int i = 0; i < this->countOfValues; i++){
-				if (!fIn.eof()){ /// Это можно унести в for
+				if (!fIn.eof()){ 
 					int value = {0};
 					try{
-						fIn >> value; /// Почему не читать сразу в int?
+						fIn >> value; 
 					}
 					catch(...){
 						return 1;
@@ -42,7 +45,7 @@ int FileSorter::SplitingIntoSortedParts()
 			countOfParts++;
 			std::sort(values.begin(), values.end());
 			stringstream numStr;
-			numStr << "sFile" << countOfParts; /// Может сразу << "sFile" << countOfParts и переменная fileOutPath не нужна
+			numStr << "sFile" << countOfParts;
 			this->WriteFile(numStr.str().c_str(), values);
 			this->mergingFiles.push(numStr.str());
 		}
@@ -56,8 +59,10 @@ int FileSorter::SplitingIntoSortedParts()
 int FileSorter::MergeFiles()
 { 
 	int mergeCounter = 1;
-	do{
-		monitor.ShowProgress("Files for merging: ", mergingFiles.size());
+	while (mergingFiles.size()>1){
+		stringstream message;		
+		message <<  "Number of files to merge: " << mergingFiles.size();
+		this->monitor->ShowMessage(message.str());	
 		int countOfThreads = mergingFiles.size()/2;
 		vector<string> filesForRemoving;
 		int *results = new int[countOfThreads];
@@ -74,20 +79,35 @@ int FileSorter::MergeFiles()
 			numStr << mergeCounter;
 			string outName = "sFile_" + numStr.str();
 			this->mergingFiles.push(outName);
-			std::thread mergThr([this, results, &i, &fileName1, &fileName2, &outName](){results[i]=this->MergeTwoFiles(fileName1, fileName2, outName);});
-			mergThr.join(); /// Зачем создавать поток и ждать его?
+			thread mergThr([this, results, &i, &fileName1, &fileName2, &outName](){results[i]=this->MergeTwoFiles(fileName1, fileName2, outName);});
+			mergThr.join();
 			mergeCounter++;
 		}
+		//Удаляем фалы, кторые только что соединяли
 		for (int i=0; i<filesForRemoving.size(); i++) remove(filesForRemoving[i].c_str());
-	}while (mergingFiles.size()>1);
-
+		//Проверяем результат каждого из слияний	
+		for (int i=0; i<countOfThreads; i++) {
+			//Если хоть одно из слияний завершилось некорректно, то 
+			if (results[i] != 0) {
+				//Удаляем все оставшиесся файлы
+				for (int j = mergingFiles.size(); j>0; j--){
+					string remFile = mergingFiles.front();
+					mergingFiles.pop();
+					remove(remFile.c_str());
+				}
+				//Завершем процедуру с кодом ошибки
+				return 1;
+			} 
+		}			
+	}
 	string oldName = mergingFiles.front();
 	mergingFiles.pop();	
 	rename(oldName.c_str(), this->outFileName.c_str());
+	this->monitor->ShowMessage("Merging done");
 	return 0;
 }
 //----------------------------------------------------------------
-int FileSorter::MergeTwoFiles(string fileName1, string fileName2, string outName)
+int inline FileSorter::MergeTwoFiles(const string fileName1, const string fileName2, const string outName)
 {	
 	std::ifstream inFile1(fileName1.c_str());
 	std::ifstream inFile2(fileName2.c_str());
@@ -95,17 +115,23 @@ int FileSorter::MergeTwoFiles(string fileName1, string fileName2, string outName
 	if (!(inFile1.is_open() && inFile2.is_open() && outFile.is_open())) {
 		return 1;
 	}
-	std::merge(std::istream_iterator<int>(inFile1), {}, std::istream_iterator<int>(inFile2), {}, std::ostream_iterator<int>(outFile, "\t"));
+	int resOfMerge = 0;
+	try{
+		std::merge(std::istream_iterator<int>(inFile1), {}, std::istream_iterator<int>(inFile2), {}, std::ostream_iterator<int>(outFile, "\t"));
+	}
+	catch(...){
+		resOfMerge = 1;
+	}
 	inFile1.close();
 	inFile2.close();
 	outFile.close();
-	return 0;
+	return resOfMerge;
 }
 //----------------------------------------------------------------
 void inline FileSorter::WriteFile(const string& fileName, const vector<int>& data) /// Параметры передаются не по const&
 {
 	ofstream outFile;
-	outFile.open(fileName.c_str()); /// Тут нет проверки is_open, не думаю, что это правильный способ использования fstream, но все же
+	outFile.open(fileName.c_str());
 	if (outFile.is_open()){
 		std::copy(data.begin(), data.end(), std::ostream_iterator<int>(outFile, "\t"));	
 	}

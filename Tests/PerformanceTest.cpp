@@ -13,8 +13,8 @@ chrono::duration<float> SortingProcedure(string initialFilePath, string savingFi
 	ramLimit *= 1024; // kByte -> Byte
 		
 	ifstream fIn;
-	FileSorter sorter(initialFilePath, savingFilePath, ramLimit);
-	int result = sorter();
+	FileSorter sorter(initialFilePath, savingFilePath, ramLimit, Monitor::getInstanceMonitor());
+	int result = sorter.makeSorting();
 	if (!result){
 		cout << endl <<"DONE!" << endl;
 		auto stop = chrono::high_resolution_clock::now();
@@ -29,8 +29,8 @@ chrono::duration<float> SortingProcedure(string initialFilePath, string savingFi
 
 TEST(PerformanceTest, timeOfFullWorking)
 {
-	string initialFilePath = "fileForPerformanceTest";
-	string savingFilePath = "OutOfPerformanceTest";
+	string initialFilePath = "fileForTest";
+	string savingFilePath = "fileOutOfTest";
 	int ramLimit = 4;
 	auto duration = SortingProcedure(initialFilePath, savingFilePath, ramLimit);
 	cout << "Time of working is :" << duration.count() << endl;
@@ -38,8 +38,8 @@ TEST(PerformanceTest, timeOfFullWorking)
 
 TEST(PerformanceTest, wrongPath)
 {
-	string initialFilePath = "wrongfileForPerformanceTest";
-	string savingFilePath = "OutOfPerformanceTest";
+	string initialFilePath = "wrongfileForTest";
+	string savingFilePath = "wrongfileOutOfTest";
 	int ramLimit = 4;
 	auto duration = SortingProcedure(initialFilePath, savingFilePath, ramLimit);
 	cout << "Time of working till error is :" << duration.count() << endl;
