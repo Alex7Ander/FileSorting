@@ -18,7 +18,7 @@ int main(int argc, char* argv[])
 	savingFilePath = argv[2];
 	ramLimit = atoi(argv[3]); 
 	if (ramLimit<1){
-		cout << "\033[33mLimit of RAM can not be less then 1 MByte\033[0m" << endl;
+		cout << "\033[33mWrong value of RAM limit\033[0m" << endl;
 		return -1;
 	} 
 

@@ -83,20 +83,15 @@ int FileSorter::MergeFiles()
 			mergThr.join();
 			mergeCounter++;
 		}
-		//Удаляем фалы, кторые только что соединяли
-		for (int i=0; i<filesForRemoving.size(); i++) remove(filesForRemoving[i].c_str());
-		//Проверяем результат каждого из слияний	
-		for (int i=0; i<countOfThreads; i++) {
-			//Если хоть одно из слияний завершилось некорректно, то 
-			if (results[i] != 0) {
-				//Удаляем все оставшиесся файлы
+		for (int i=0; i<filesForRemoving.size(); i++) remove(filesForRemoving[i].c_str());	//Удаляем файлы, кторые только что соединяли			
+		for (int i=0; i<countOfThreads; i++) {												//Проверяем результат каждого из слияний		
+			if (results[i] != 0) {															//Если хоть одно из слияний завершилось некорректно, то 
 				for (int j = mergingFiles.size(); j>0; j--){
 					string remFile = mergingFiles.front();
 					mergingFiles.pop();
-					remove(remFile.c_str());
+					remove(remFile.c_str());												//Удаляем все оставшиесся файлы
 				}
-				//Завершем процедуру с кодом ошибки
-				return 1;
+				return 1;															
 			} 
 		}			
 	}
